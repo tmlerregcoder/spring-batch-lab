@@ -12,10 +12,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
 @Data
+@Table(name = "conta")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Conta {
@@ -23,19 +25,12 @@ public class Conta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String agencia;
-
-    @Column(name = "numero_conta", nullable = false, unique = true)
-    private String numeroConta;
-
-    @Column(name = "tipo_conta", nullable = false)
-    private String tipoConta; // Ex: Corrente, Poupanca
-
-    @Column(nullable = false, precision = 19, scale = 2)
+    private String numero;
+    private String tipo;
     private BigDecimal saldo;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "cliente_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 }
